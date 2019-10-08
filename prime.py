@@ -13,7 +13,10 @@ def is_prime(n):
 
 def test_is_prime():
     assert (is_prime(7))
+    assert (is_prime(2))
+    assert (not is_prime(1))
     assert (not is_prime(8))
+    assert (not is_prime(15))
 
 
 def run_using_while(x):
@@ -27,11 +30,12 @@ def run_using_while(x):
         i -= 1
 
 
-def run():
-    test_is_prime()
+def main():
     x = int(input("x="))
 
     run_using_while(x)
 
 
-run()
+test_is_prime()
+
+main()
