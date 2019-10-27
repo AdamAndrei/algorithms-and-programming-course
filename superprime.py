@@ -24,7 +24,7 @@ def test_is_superprim():
     assert (is_super_prime(233))
     assert (is_super_prime(23))
     assert (not is_super_prime(234))
-
+    assert(  is_super_prime(3))
 
 def main():
     a = int(input("x="))
@@ -36,3 +36,5 @@ def main():
 
 test_is_superprim()
 main()
+
+
