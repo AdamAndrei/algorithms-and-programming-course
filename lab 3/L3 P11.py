@@ -9,8 +9,8 @@ def two_base(a):
     return m
 
 
-def bits(Number):
-    a = two_base(Number)
+def bits(number):
+    a = two_base(number)
     number_of_one = 0
     while a > 0:
         ld = a % 10
@@ -22,12 +22,12 @@ def bits(Number):
 
 def read_list():
     n = int(input("Number of elements=  "))
-    lista = []
+    list = []
 
     for index in range(n):
         aux = int(input("\t x = "))
-        lista.append(aux)
-    return lista
+        list.append(aux)
+    return list
 
 
 def print_list(list):
@@ -49,24 +49,68 @@ Out:
 """
 
 
-def subsequence_eleven(list):
-    beststart = 0
-    bestcount = 0
-    curentstart = 0
-    curentcount = 0
-
-    for index in range(len(list) - 1):
-        if bits(list[index]) == bits(list[index + 1]):
-            curentcount += 1
-            if curentcount == 1:
-                curentstart = index
-            if curentcount > bestcount:
-                bestcount = curentcount
-                beststart = curentstart
-        else:
-            curentcount = 0
-    return list[beststart: beststart + bestcount + 1]
+def get_all_subsequences(list):
+    length = len(list)
+    list_of_subsequences = []
+    for index in range(length):
+        for k in range(length - index):
+            list_of_subsequences.append(list[index: index + 1 + k])
+    return list_of_subsequences
 
 
-print_list(subsequence_eleven(read_list()))
+def get_subsequences_with_length(list_of_subsequences, k):
+    subsequence_with_given_length = []
+    for subsequence in list_of_subsequences:
+        if len(subsequence) == k:
+            subsequence_with_given_length.append([subsequence])
+    return subsequence_with_given_length
 
+
+def has_same_amount_of_1(sequence):
+    for index in range(len(sequence) - 1):
+        if bits(sequence[index]) != bits(sequence[index + 1]):
+            return False
+    return True
+
+
+def get_subsequences_with_numbers_with_same_amount_of_1(list_of_sequences):
+    same_number_of_one_in_subsequences = []
+    for sequence in list_of_sequences:
+        if has_same_amount_of_1(sequence):
+            same_number_of_one_in_subsequences.append(sequence)
+
+    return same_number_of_one_in_subsequences
+
+
+def find_max_length(list_of_sequences):
+    max_length = 0
+    for sequence in list_of_sequences:
+        if len(sequence) > max_length:
+            max_length = len(sequence)
+    return max_length
+
+
+def get_indexes_of_ascending_lists_with_length(list, k):
+    """
+    Description: get all the indices of the ascending subsequences with maximum length
+    :param list: list
+    :param k: int
+    :return: a list of list of indices
+    """
+    list_of_list_of_indices = []
+    for index in range(len(list) - k + 1):
+        if has_same_amount_of_1(list[index:index + k]):
+            list_of_indices = [index, index + k - 1]
+            list_of_list_of_indices.append(list_of_indices)
+    return list_of_list_of_indices
+
+
+def all_indices_of_subsequences_from_list(list):
+    all_subsequences = get_all_subsequences(list)
+    one_subsequences = get_subsequences_with_numbers_with_same_amount_of_1(all_subsequences)
+    max_length = find_max_length(one_subsequences)
+
+    return get_indexes_of_ascending_lists_with_length(list, max_length)
+
+
+print(all_indices_of_subsequences_from_list(read_list()))

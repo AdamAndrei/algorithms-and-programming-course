@@ -30,7 +30,7 @@ def get_subsequences_with_length(list_of_subsequences, k):
     subsequence_with_given_length = []
     for subsequnce in list_of_subsequences:
         if len(subsequnce) == k:
-            subsequence_with_given_length.append(subsequnce)
+            subsequence_with_given_length.append([subsequnce])
     return subsequence_with_given_length
 
 
