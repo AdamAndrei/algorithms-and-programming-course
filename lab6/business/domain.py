@@ -14,9 +14,7 @@ def create_object_dictionary(ID, name, description, price, location):
                   "description": description,
                   "price": price,
                   "location": location}
-    x = '{}, {}, {}, {}, {}'.format(ID, name, description, price, location)
     return dictionary
-    # return x
 
 def get_ID_dictionary(one_object):
     """
@@ -24,8 +22,6 @@ def get_ID_dictionary(one_object):
     :param one_object: dictionary
     :return: ID of the object
     """
-    # a = one_object.split(sep=",")
-    # return int(a[0])
     return one_object["ID"]
 
 def get_name_dictionary(one_object):
@@ -34,8 +30,6 @@ def get_name_dictionary(one_object):
     :param one_object: dictionary
     :return: name of the object
     """
-    # a = one_object.split(sep=",")
-    # return input(a[1])
     return one_object["name"]
 
 
@@ -45,8 +39,6 @@ def get_description_dictionary(one_object):
     :param one_object: dictionary
     :return: description of the object
     """
-    # a = one_object.split(sep=",")
-    # return input(a[2])
     return one_object["description"]
 
 
@@ -56,8 +48,6 @@ def get_price_dictionary(one_object):
     :param one_object: dictionary
     :return: price of the object
     """
-    # a = one_object.split(sep=",")
-    # return float(a[3])
     return one_object["price"]
 
 
@@ -67,8 +57,6 @@ def get_location_dictionary(one_object):
     :param one_object: dictionary
     :return: location of the object
     """
-    # a = one_object.split(sep=",")
-    # return str(a[4])
     return one_object["location"]
 
 

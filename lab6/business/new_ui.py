@@ -134,18 +134,22 @@ F3. Updating an object from inventory
 F4. Move objects from one place to another
 F5. Add string to description
 
+Features:
+F1. Adding an expense
+F2. Removing an expense
+F3. Modifying an expense
+
 Running scenario for F1:
-# | User                             | Program                                                                                 | Comment
+# | User          | Program                           | Comment
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1 |                                  | <main>                                                                                  | The program displays the menu
-2 |add:1:chair:made of wood:12:room  |                                                                                         | The user chooses to add 
-3 |                                  |  [{'ID':1,'name':'chair','description':'made of wood','price': 12, 'location':'room'}]  | The program print the list with the added object
-4 |                                  |  What option do you want:                                                               | The program display the menu and asks for another command
-5 |add:2:table:made of steel:13:roof |                                                                                         | The user chooses to add 
-6 |                                  |  [{'ID':2,'name':'table','description':'made of steel','price': 13,'location':'roof'}]  | The program print the list with the added object
-7 |                                  |  What option do you want:                                                               | The program display the menu and asks for another command
-8 |                                  | <main>                                                                                  | 
------------------------------------------------------------------------------------------------------------------------------------------------------------
+1 |               | <main>                            | The program displays the menu
+2 | 1             |                                   | The user chooses the addition
+3 |               | Give the object ID:               | The program asks for the object ID
+4 | 1             | Give the name of the object:      | The user gives the number 1 and the program asks for the name
+5 | chair         | Give the description of the object| The user gives the name 'chair' and the program requests the description
+6 | made of wood  | Give the price of object          | The user gives description 'made of wood' and the program asks for the price
+7 | 23            | Give the location                 | The user gives the price 23 and the program asks for location
+8 | room          | Add and print object              | The program displays the menu
 
 
 Activities for F1:
@@ -160,12 +164,9 @@ Running scenario for F2:
 # | User          | Program                                                | Comment
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1 |               | <main>                                                 | The program displays the menu
-2 |remove:2       |                                                        | We choose to remove the object with ID = 2
-3 |               | The program prints the modified list of object          | The program delete the object with ID = 2 from the list
+2 |2              | Give the id                                            | We choose to remove an object and the program asks for the id of the object wanted to be removed
+3 |1              | The program remove object and print the inventory      | The program delete the object with ID = 1 from the list
 4 |               | <main>                                                 | The list has been modified, by deleting the desired object, the menu being displayed again
-5 |remove:1       |                                                        | We choose to remove the object with ID = 1
-6 |               | The program prints the modified list of object          | The program delete the object with ID = 1 from the list
-7 | 3             | <main>                                                 | The list has been modified, by deleting the desired object, the menu being displayed again
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -180,12 +181,9 @@ Running scenario for F3:
 # | User                                | Program                                                                                 | Comment
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1 |                                     | <main>                                                                                  | The program displays the menu
-2 |update:1:chair:made of wood:12:room  |                                                                                         | The user chooses to update the object with ID = 1
-3 |                                     |  [{'ID':1,'name':'chair','description':'made of wood','price': 12, 'location':'room'}]  | The program print the list with the updated object
+2 | 3                                   |  Give the id                                                                            | The user choose to updare and the program asks for for the id 
+3 |                                     |  Update object and print list                                                           | The program print the list with the updated object
 4 |                                     |  What option do you want:                                                               | The program display the menu and asks for another command
-5 |update:2:table:made of steel:13:roof |                                                                                         | The user chooses to update the object with ID = 2
-6 |                                     |  [{'ID':2,'name':'table','description':'made of steel','price': 13,'location':'roof'}]  | The program print the list with the added object
-7 |                                     |   What option do you want:                                                              | The program display the menu and asks for another command
 8 |                                     | <main>                                                                                  | 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -203,13 +201,9 @@ Running scenario for F4:
 # | User                                | Program                                           | Comment
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1 |                                     | <main>                                            | The program displays the menu
-2 |move:roof:room                       |                                                   | The user chooses to move the objects from roof to room
-3 |                                     |  The program prints the modified list of objects   | The program print the list with the object moved into the new location
-4 |                                     |  What option do you want:                         | The program display the menu and asks for another command
-5 |move:bath:roof                       |                                                   | The user chooses to move the objects from bath to roof
-6 |                                     |  The program prints the modified list of objects   | The program print the list with the added object
-7 |                                     |   What option do you want:                        | The program display the menu and asks for another command
-8 |                                     | <main>                                            | 
+2 |4                                    |  Give location                                    | The user chooses to move the
+3 |room                                 |  Give new location                                | The program asks for the new location
+4 |roof                                 |  What option do you want:                         | The program print the list with the object moved into the new location and print menu
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -226,12 +220,10 @@ Running scenario for F5:
 # | User                     | Program                                           | Comment
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 1 |                          | <main>                                            | The program displays the menu
-2 |append string:ANDREI:34   |                                                   | The user chooses to add string ANDREI to the object descriptions that have higher price than 34 
-3 |                          |  The program prints the modified list of objects   | The program print the list with the object description modified
-4 |                          |  What option do you want:                         | The program display the menu and asks for another command
-5 |append string:ADAM:23     |                                                   | The user chooses to add string ADAM to the object descriptions that have higher price than 23 
-6 |                          |  The program prints the modified list of objects   | The program print the list with the added object
-7 |                          |   What option do you want:                        | The program display the menu and asks for another command
+2 |5                         |                                                   | The user chooses to add string to the object descriptions 
+3 |                          |  Give string                                      | The program asks for the string
+4 |ANDREI                    |  Give number                                      | The program  asks for the number to compare
+5 |                          |  Print list modified and menu                     | The program prints the modified repository
 8 |                          | <main>                                            | 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -67,8 +67,8 @@ def test_set_price_dictionary():
 
 
 def test_set_location_dictionary():
-    one_object = create_object_dictionary(1, "chair", "made of wood", 23, "table")
-    assert get_location_dictionary(one_object) == "table"
+    one_object = create_object_dictionary(1, "chair", "made of wood", 23, "room")
+    assert get_location_dictionary(one_object) == "room"
     set_location_dictionary(one_object, "roof")
     assert get_location_dictionary(one_object) == "roof"
 
@@ -138,9 +138,9 @@ def test_sum_by_location_dictionary():
 
 
 def all_tests():
+    test_get_ID_dictionary()
     test_get_location()
     test_get_description_dictionary()
-    test_get_ID_dictionary()
     test_get_name_dictionary()
     test_get_price_dictionary()
     test_set_ID_dictionary()

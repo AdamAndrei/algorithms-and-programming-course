@@ -1,0 +1,2 @@
+class InvalidMedicineException(Exception):
+    pass
