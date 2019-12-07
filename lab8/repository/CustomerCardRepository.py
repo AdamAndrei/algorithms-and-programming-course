@@ -1,6 +1,6 @@
 import json
 
-from lab8.domain.CustomerCard import CustomerCard
+from domain.CustomerCard import CustomerCard
 
 
 class CustomerCardRepository:
@@ -15,14 +15,14 @@ class CustomerCardRepository:
                 self.__customer_card_storage.clear()
                 for saved_card in saved_cards:
                     card = CustomerCard(*saved_card)
-                    self.__customer_card_storage[card.get_customer_card_id()] = card
+                    self.__customer_card_storage[card.get_id_entity()] = card
         except FileNotFoundError:
             self.__customer_card_storage = {}
 
     def __save_to_file(self):
         to_save = []
         for customer_card in self.__customer_card_storage.values():
-            found_card = [customer_card.get_customer_card_id(),
+            found_card = [customer_card.get_id_entity(),
                           customer_card.get_customer_name(),
                           customer_card.get_customer_first_name(),
                           customer_card.get_customer_cnp(),
@@ -38,13 +38,13 @@ class CustomerCardRepository:
             if self.__customer_card_storage[card_key].get_customer_cnp() == customer_card.get_customer_cnp():
                 raise ValueError("CNP {} already exists".format(customer_card.get_customer_cnp()))
 
-    def add(self, customer_card):
+    def create(self, customer_card):
         self.__load_from_file()
         if not isinstance(customer_card, CustomerCard):
             raise ValueError("This is not a CustomerCard type")
-        key = customer_card.get_customer_card_id()
+        key = customer_card.get_id_entity()
         if key in self.__customer_card_storage:
-            raise ValueError("Id {} already exists".format(customer_card.get_customer_card_id()))
+            raise ValueError("Id {} already exists".format(customer_card.get_id_entity()))
         self.__ensure_unique_cnp(customer_card)
         self.__customer_card_storage[key] = customer_card
         self.__save_to_file()
@@ -64,9 +64,9 @@ class CustomerCardRepository:
         self.__load_from_file()
         if not isinstance(customer_card, CustomerCard):
             raise ValueError("This is not a medicine type")
-        customer_card_id = customer_card.get_customer_card_id()
+        customer_card_id = customer_card.get_id_entity()
         if customer_card_id not in self.__customer_card_storage:
-            raise ValueError("Id {} doesn't exist".format(customer_card.get_customer_card_id()))
+            raise ValueError("Id {} doesn't exist".format(customer_card.get_id_entity()))
         self.__ensure_unique_cnp(customer_card)
         self.__customer_card_storage[customer_card_id] = customer_card
         self.__save_to_file()

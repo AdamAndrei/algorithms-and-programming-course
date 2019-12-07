@@ -1,0 +1,2 @@
+class InvalidIDException(Exception):
+    pass

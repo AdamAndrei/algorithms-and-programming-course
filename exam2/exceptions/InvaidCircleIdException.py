@@ -1,0 +1,2 @@
+class InvalidCircleIdException(Exception):
+    pass

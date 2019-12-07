@@ -1,19 +1,25 @@
-from lab8.domain.Medicine import Medicine
+from domain.Medicine import Medicine
+from exception.InvalidMedicineException import InvalidMedicineException
 
 
 class MedicineValidator:
-
-    def validate_medicine(self, medicine: Medicine):
-        if not isinstance(medicine.get_medicine_id(), int):
-            raise ValueError("Medicine id {} is not int".format(medicine.get_medicine_id()))
+    @staticmethod
+    def validate_medicine(medicine: Medicine):
+        """
+        Function verify if an object respects some conditions and if it finds an irregularity raise an exception
+        :param medicine: an Medicine object
+        :return: exceptions
+        """
+        if not isinstance(medicine.get_id_entity(), int):
+            raise InvalidMedicineException("Medicine id {} is not int".format(medicine.get_id_entity()))
         if not isinstance(medicine.get_medicine_price(), float):
-            raise ValueError("Medicine price {} is not float".format(medicine.get_medicine_price()))
+            raise InvalidMedicineException("Medicine price {} is not float".format(medicine.get_medicine_price()))
         if not isinstance(medicine.get_recipe_need(), bool):
-            raise ValueError("Recipe need {} must be True or False".format(medicine.get_recipe_need()))
+            raise InvalidMedicineException("Recipe need {} must be True or False".format(medicine.get_recipe_need()))
         if medicine.get_medicine_price() <= 0:
-            raise ValueError("Medicine price {} must be a positive "
-                             "number".format(medicine.get_medicine_price()))
+            raise InvalidMedicineException("Medicine price {} must be a positive "
+                                           "number".format(medicine.get_medicine_price()))
         if len("{}".format(medicine.get_medicine_name())) == 0:
-            raise ValueError("Medicine has to get a name ")
+            raise InvalidMedicineException("Medicine has to get a name ")
         if len("{}".format(medicine.get_name_medicine_producer())) == 0:
-            raise ValueError("Producer has to get a name ")
+            raise InvalidMedicineException("Producer has to get a name ")

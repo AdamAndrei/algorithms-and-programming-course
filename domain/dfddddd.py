@@ -12,7 +12,12 @@ n = 10000
 
 # print(count_stairs(100))
 
-a = 1
-for i in range(1, 1000):
-    a += 1 / (2 ** i)
-    print(i, 5 * a)
+# a = 1
+# for i in range(1, 1000):
+#     a += 1 / (2 ** i)
+#     print(i, 5 * a)
+
+s = 0
+for i in range(1001):
+    s += (i ** 10)
+print(s)

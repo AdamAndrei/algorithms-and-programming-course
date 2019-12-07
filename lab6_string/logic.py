@@ -191,29 +191,7 @@ def validate_unique_id(item, list):
             raise ValueError("Id must be unique")
 
 
-def undo(list_undo, list_redo):
-    '''
-    Undo for a list to before an operation was made
-    :param list_redo:
-    :param list_undo:
-    :param listRedo: list redo
-    :param listUndo: list
-    :return: -------
-    '''
-
-    list_redo.append(list_undo[len(list_undo) - 1])
-    list_undo.pop(len(list_undo) - 1)
-
-
-def AddUndo(listAdded, undoList, listRedo, filename):
-    '''
-    Adds the list before an operation is made so that it can be traced back
-    :param listRedo:
-    :param listAdded: list
-    :param undoList: list
-    :return: ------
-    '''
-    c = listAdded[:]
-    undoList.append(c)
-    save_to_file(c, filename)
-    listRedo.clear()
+def get_obj_by_id(id, list_of_objects):
+    for object in list_of_objects:
+        if get_ID_dictionary(object) == id:
+            return object

@@ -1,6 +1,7 @@
 import json
 
-from lab8.domain.Medicine import Medicine
+from domain.Medicine import Medicine
+from exception.InvalidMedicineException import InvalidMedicineException
 
 
 class MedicineRepository:
@@ -15,14 +16,14 @@ class MedicineRepository:
                 self.__medicine_storage.clear()
                 for saved_drug in saved_drugs:
                     drug = Medicine(*saved_drug)
-                    self.__medicine_storage[drug.get_medicine_id()] = drug
+                    self.__medicine_storage[drug.get_id_entity()] = drug
         except FileNotFoundError:
             self.__medicine_storage = {}
 
     def __save_to_file(self):
         to_save = []
         for medicine in self.__medicine_storage.values():
-            found_medicine = [medicine.get_medicine_id(),
+            found_medicine = [medicine.get_id_entity(),
                               medicine.get_medicine_name(),
                               medicine.get_name_medicine_producer(),
                               medicine.get_medicine_price(),
@@ -34,10 +35,10 @@ class MedicineRepository:
     def create(self, drug):
         self.__load_from_file()
         if not isinstance(drug, Medicine):
-            raise ValueError("This is not a medicine type")
-        key = drug.get_medicine_id()
+            raise InvalidMedicineException("This is not a medicine type")
+        key = drug.get_id_entity()
         if key in self.__medicine_storage:
-            raise ValueError("Id {} already exists".format(drug.get_medicine_id()))
+            raise InvalidMedicineException("Id {} already exists".format(drug.get_id_entity()))
         self.__medicine_storage[key] = drug
         self.__save_to_file()
 
@@ -54,17 +55,17 @@ class MedicineRepository:
     def update(self, medicine):
         self.__load_from_file()
         if not isinstance(medicine, Medicine):
-            raise ValueError("This is not a medicine type")
-        medicine_id = medicine.get_medicine_id()
+            raise InvalidMedicineException("This is not a medicine type")
+        medicine_id = medicine.get_id_entity()
         if medicine_id not in self.__medicine_storage:
-            raise ValueError("Id {} already exists".format(medicine.get_medicine_id()))
+            raise InvalidMedicineException("Id {} already exists".format(medicine.get_id_entity()))
         self.__medicine_storage[medicine_id] = medicine
         self.__save_to_file()
 
     def delete(self, medicine_id):
         self.__load_from_file()
         if medicine_id not in self.__medicine_storage:
-            raise ValueError("There's no ID = {}".format(medicine_id))
+            raise InvalidMedicineException("There's no ID = {}".format(medicine_id))
         del self.__medicine_storage[medicine_id]
         self.__save_to_file()
 

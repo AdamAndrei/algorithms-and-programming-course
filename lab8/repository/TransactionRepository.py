@@ -1,6 +1,6 @@
 import json
 
-from lab8.domain.Transaction import Transaction
+from domain.Transaction import Transaction
 
 
 class TransactionRepository:
@@ -15,14 +15,14 @@ class TransactionRepository:
                 self.__transaction_storage.clear()
                 for saved_transaction in saved_transactions:
                     transaction = Transaction(*saved_transaction)
-                    self.__transaction_storage[transaction.get_transaction_id()] = transaction
+                    self.__transaction_storage[transaction.get_id_entity()] = transaction
         except FileNotFoundError:
             self.__transaction_storage = {}
 
     def __save_to_file(self):
         to_save = []
         for transaction in self.__transaction_storage.values():
-            found_transaction = [transaction.get_transaction_id(),
+            found_transaction = [transaction.get_id_entity(),
                                  transaction.get_medicine_transacted_id(),
                                  transaction.get_customer_card_transaction_id(),
                                  transaction.get_pieces_number(),
@@ -37,7 +37,7 @@ class TransactionRepository:
         if not isinstance(transaction,
                           Transaction):
             raise ValueError("Is not a transaction type")
-        key = transaction.get_transaction_id()
+        key = transaction.get_id_entity()
         if key in self.__transaction_storage:
             raise ValueError("Id = {} already exists".format(key))
         self.__transaction_storage[key] = transaction
@@ -57,9 +57,9 @@ class TransactionRepository:
         self.__load_from_file()
         if not isinstance(transaction, Transaction):
             raise ValueError("This is not a medicine type")
-        transaction_id = transaction.get_transaction_id()
+        transaction_id = transaction.get_id_entity()
         if transaction_id not in self.__transaction_storage:
-            raise KeyError("Id {} doesn't exist".format(transaction.get_transaction_id()))
+            raise KeyError("Id {} doesn't exist".format(transaction.get_id_entity()))
         self.__transaction_storage[transaction_id] = transaction
         self.__save_to_file()
 

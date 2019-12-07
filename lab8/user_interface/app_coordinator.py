@@ -1,21 +1,20 @@
-from lab8.domain.CustomerCardValidator import CustomerCardValidator
-from lab8.domain.MedicineValidator import MedicineValidator
-from lab8.domain.TransactionValidator import TransactionValidator
-from lab8.repository.CustomerCardRepository import CustomerCardRepository
-from lab8.repository.MedicineRepository import MedicineRepository
-from lab8.repository.TransactionRepository import TransactionRepository
-from lab8.service.CustomerCardService import CustomerCardService
-from lab8.service.MedicineService import MedicineService
-from lab8.service.TransactionService import TransactionService
-from lab8.user_interface.Console import Console
+from domain.CustomerCardValidator import CustomerCardValidator
+from domain.MedicineValidator import MedicineValidator
+from domain.TransactionValidator import TransactionValidator
+from repository.GenericRepository import GenericRepository
+from service.CustomerCardService import CustomerCardService
+from service.MedicineService import MedicineService
+from service.TransactionService import TransactionService
+from test.mainTest import run_tests
+from user_interface.Console import Console
 
 
 def main():
-    medicine_repository = MedicineRepository("drugs.txt")
+    medicine_repository = GenericRepository("drugs.pickle")
     medicine_validator = MedicineValidator()
-    customer_card_repository = CustomerCardRepository("cards.txt")
+    customer_card_repository = GenericRepository("cards.pickle")
     customer_card_validator = CustomerCardValidator()
-    transaction_repository = TransactionRepository("transactions.txt")
+    transaction_repository = GenericRepository("transactions.pickle")
     transaction_validator = TransactionValidator()
     medicine_service = MedicineService(medicine_repository,
                                        medicine_validator,
@@ -34,4 +33,5 @@ def main():
     ui.run_console()
 
 
+# run_tests()
 main()

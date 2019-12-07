@@ -1,0 +1,2 @@
+class InvalidRadiusException(Exception):
+    pass

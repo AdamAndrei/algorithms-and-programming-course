@@ -1,5 +1,4 @@
 import lab6_string.test as test
-from copy import deepcopy
 
 from lab6_string.logic import *
 
@@ -131,10 +130,9 @@ ITEMS_DB_FILE = "items_db.json"
 
 
 def main():
-    list_for_undo = []
     list = []
-    redo_list = []
-    AddUndo(list, list_for_undo, redo_list, ITEMS_DB_FILE)
+    list_for_undo = []
+    list_for_redo = []
     while True:
         print_menu()
         try:
@@ -149,64 +147,74 @@ def main():
                 validate_item(obj)
                 if len(list) > 0:
                     validate_unique_id(obj, list)
-                list_one = make_copy(list)
-                list_for_undo.append(list_one)
                 add_object_dictionary(list, obj, ITEMS_DB_FILE)
+                list_for_undo.append([remove_object_dictionary, list, ID, ITEMS_DB_FILE])
+                list_for_redo = []
             elif operation == 2:
                 ID = int(input("ID= "))
-                list_two = make_copy(list)
-                list_for_undo.append(list_two)
+                list_for_undo.append([add_object_dictionary, list, get_obj_by_id(ID, list), ITEMS_DB_FILE])
                 remove_object_dictionary(list, ID, ITEMS_DB_FILE)
+                list_for_redo = []
             elif operation == 3:
                 ID = int(input("ID= "))
                 new_name = input("new_name = ")
                 new_description = input("new_description= ")
                 new_price = float(int(input("new_price= ")))
                 new_location = input("new_location= ")
-                list_three = make_copy(list)
-                list_for_undo.append(list_three)
                 update_object_dictionary(ID, list, new_name, new_description, new_price, new_location, ITEMS_DB_FILE)
             elif operation == 4:
                 location = input("location= ")
                 new_location_to_move = input("new_location_to_move= ")
-                list_four = make_copy(list)
-                list_for_undo.append(list_four)
                 move_object_dictionary(list, location, new_location_to_move, ITEMS_DB_FILE)
             elif operation == 5:
                 string = input("string= ")
                 price = float(int(input("the given number= ")))
-                list_five = make_copy(list)
-                list_for_undo.append(list_five)
                 add_string_dictionary(list, string, price, ITEMS_DB_FILE)
             elif operation == 6:
                 print(max_per_location_dictionary(list))
             elif operation == 7:
-                list_seven = deepcopy(list)
-                list_for_undo.append(list_seven)
                 ascending_order_by_price_dictionary(list, ITEMS_DB_FILE)
             elif operation == 8:
                 print(sum_by_location_dictionary(list))
             elif operation == 9:
-                try:
-                    list = list_for_undo.pop()
-                except IndexError:
-                    print(" ")
-                    print("List is empty, Undo cannot be done")
-                    print(" ")
-                    print(" ")
-            elif operation == 10:
-                if len(redo_list) == 0:
-                    print("Nu se mai poate face redo")
+                if len(list_for_undo) > 0:
+                    oper = list_for_undo[-1]
+                    ope_string = "{}".format(oper[0])
+                    if "remove" in ope_string:
+                        list_for_redo.append([add_object_dictionary, list, get_obj_by_id(oper[2], list), ITEMS_DB_FILE])
+                    if "add" in ope_string:
+                        list_for_redo.append([remove_object_dictionary, list, get_ID_dictionary(oper[2]),
+                                              ITEMS_DB_FILE])
+                    op = list_for_undo.pop()
+                    op[0](op[1], op[2], op[3])
                 else:
-                    list_for_undo.append(redo_list[len(redo_list) - 1])
-                    redo_list.pop(len(redo_list) - 1)
-                    list = list_for_undo[len(list_for_undo) - 1]
-                    print(list)
+                    print("You have nothing to undo")
+            elif operation == 10:
+                if len(list_for_redo) > 0:
+                    oper = list_for_redo[-1]
+                    ope_string = "{}".format(oper[0])
+                    if "remove" in ope_string:
+                        list_for_undo.append([add_object_dictionary, list, get_obj_by_id(oper[2], list), ITEMS_DB_FILE])
+                    if "add" in ope_string:
+                        list_for_undo.append([remove_object_dictionary, list, get_ID_dictionary(oper[2]), ITEMS_DB_FILE])
+                    ope = list_for_redo.pop()
+                    ope[0](ope[1], ope[2], ope[3])
+                else:
+                    print("Redo cannot be done")
             elif operation == 11:
                 break
         except ValueError as ve:
             print(ve)
+        print("Actual list:")
         print(list)
+        print("")
+        print("")
+        print("List for undo:")
+        print(list_for_undo)
+        print("")
+        print("")
+        print("List for redo:")
+        print(list_for_redo)
 
 
 if __name__ == '__main__':
